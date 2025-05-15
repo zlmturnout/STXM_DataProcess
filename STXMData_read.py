@@ -152,12 +152,12 @@ if __name__=="__main__":
     fig3 = plt.figure(figsize =(16, 9))
     fig3.canvas.manager.window.setWindowTitle("Visualize raw image")
     #plt.subplot(1,1,1),plt.scatter(x=matrix_pos1,y=matrix_pos2,c=Image_count,s=10,cmap=cm.rainbow)
-    
-    plt.subplot(1,2,2),plt.imshow(order_PMTcount,cmap=cm.gray,vmin=800,vmax=900),plt.title("original PMT counts")
-    plt.colorbar(location='bottom', fraction=0.1)
-    plt.subplot(1,2,1),plt.imshow(order_PMTcount-order_PMTref*1.0,cmap=cm.rainbow,vmin=10,vmax=100),plt.title("substract PMT counts")
-    plt.colorbar(location='bottom', fraction=0.1)
-    #plt.title("all counts")
+<<<<<<< HEAD
+    plt.subplot(1,1,1),plt.imshow(order_PMTcount,cmap=cm.plasma),plt.title("PMT counts")
+=======
+    plt.subplot(1,1,1),plt.imshow(new_counts,cmap=cm.Greys),plt.title("new counts")
+>>>>>>> 71aa0a733e4e482bb06a054fd1ce4d2f57c2e02b
+    plt.colorbar(location='right', fraction=0.1),plt.title("all counts")
     plt.show()
 
     print("OK")
