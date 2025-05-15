@@ -74,7 +74,7 @@ def reshape_SSRFh5(filepath:str,main_key:str="FPGA control board"):
     matrix_counts = np.array(h5_data['PMT counter'],dtype=np.float32)
     row_n,col_n=matrix_counts.shape
     print(f'Matrix with shape:{matrix_counts.shape}')
-    matrix_ref=np.array(h5_data['PMT ref'],dtype=np.float32)
+    matrix_ref=np.array(h5_data['PMT ref']).astype(np.float32)
     pos_x=np.array(h5_data['positon 1 data'],dtype=np.float32)
     pos_y=np.array(h5_data['positon 2 data'],dtype=np.float32)
     # plot historm
@@ -96,15 +96,12 @@ if __name__=="__main__":
     #test_h5=os.path.abspath("h5_data\\SSF20221202080751interp.hdf5")
     preE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115235307.h5")
     
-<<<<<<< HEAD
     mainE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115235856.h5")
     test_h5=os.path.abspath("h5_data\\SF20221202061732.h5")
-=======
-    #test_h5=os.path.abspath("h5_data\\SF20221202061732.h5")
-    test_h5=os.path.abspath("h5_data\\SF20221205224716.h5")
->>>>>>> 71aa0a733e4e482bb06a054fd1ce4d2f57c2e02b
     
-    topup_dotted_h5=os.path.abspath("h5_data\\SF20221205224716.h5")
+    #topup_dotted_h5=os.path.abspath("h5_data\\SF20221205224716.h5")
+    topup_dotted_h5=os.path.abspath("h5_data\\SF20250508205131.h5")
+    
     print(os.path.splitext(test_h5))
     #test_h5=os.path.abspath("h5_data\\SF20230115235856.h5")
     #h5_file=h5py.File(test_h5,'r')
@@ -150,17 +147,17 @@ if __name__=="__main__":
     # x_list=[i for i in range(col_n)]
     # plt.subplot(2,2,1),plt.plot(x_list,matrix_pos1[0])
     # plt.subplot(2,2,2),plt.plot(x_list,matrix_pos1[2])
-    # plt.subplot(2,2,3),plt.plot(x_list,matrix_pos1[4])
+    # plt.subplot(2,2,3),plt.plot(x_list,matrix_pos13[4])
     # plt.subplot(2,2,4),plt.plot(x_list,matrix_pos1[6])
     fig3 = plt.figure(figsize =(16, 9))
     fig3.canvas.manager.window.setWindowTitle("Visualize raw image")
     #plt.subplot(1,1,1),plt.scatter(x=matrix_pos1,y=matrix_pos2,c=Image_count,s=10,cmap=cm.rainbow)
-<<<<<<< HEAD
-    plt.subplot(1,1,1),plt.imshow(order_PMTcount,cmap=cm.plasma),plt.title("PMT counts")
-=======
-    plt.subplot(1,1,1),plt.imshow(new_counts,cmap=cm.Greys),plt.title("new counts")
->>>>>>> 71aa0a733e4e482bb06a054fd1ce4d2f57c2e02b
-    plt.colorbar(location='right', fraction=0.1),plt.title("all counts")
+    
+    plt.subplot(1,2,2),plt.imshow(order_PMTcount,cmap=cm.gray,vmin=800,vmax=900),plt.title("original PMT counts")
+    plt.colorbar(location='bottom', fraction=0.1)
+    plt.subplot(1,2,1),plt.imshow(order_PMTcount-order_PMTref*1.0,cmap=cm.rainbow,vmin=10,vmax=100),plt.title("substract PMT counts")
+    plt.colorbar(location='bottom', fraction=0.1)
+    #plt.title("all counts")
     plt.show()
 
     print("OK")
