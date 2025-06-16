@@ -213,12 +213,14 @@ if __name__=="__main__":
     # data_stack=data(data_struct)
     # read(converted_hdf5,data_stack)
     # dual energy
-    preE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115233909.h5")
-    mid_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115232535.h5")
-    mainE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115232937.h5")
-    SSRF_h5ToDualEnergyHDF5(preE_h5file,mainE_h5file,data_struct,save_path='',namestr='_1318-1331eV')
-    SSRF_h5ToDualEnergyHDF5(preE_h5file,mid_h5file,data_struct,save_path='',namestr='_1318-1327eV')
-
+    # preE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115233909.h5")
+    # mid_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115232535.h5")
+    # mainE_h5file=os.path.abspath("h5_data\\dual_energy\\SF20230115232937.h5")
+    # SSRF_h5ToDualEnergyHDF5(preE_h5file,mainE_h5file,data_struct,save_path='',namestr='_1318-1331eV')
+    # SSRF_h5ToDualEnergyHDF5(preE_h5file,mid_h5file,data_struct,save_path='',namestr='_1318-1327eV')
+    preE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191020.h5")
+    mainE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191145.h5")
+    SSRF_h5ToDualEnergyHDF5(preE_h5file,mainE_h5file,data_struct,save_path='',namestr='_525-540eV')
     #reshape_SSRFh5(mainE_h5file)
 
 

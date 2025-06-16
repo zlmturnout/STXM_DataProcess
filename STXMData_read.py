@@ -7,7 +7,7 @@ import matplotlib.cm as cm
 from scipy.interpolate import rbf,griddata
 
 
-def median_filter(matrix:np.array([]),filter_N:int=3):
+def median_filter(matrix:np.array,filter_N:int=3):
     median_matrix=cv2.medianBlur(matrix, filter_N)
     return median_matrix
 
@@ -65,6 +65,19 @@ def read_hdf5(filepath:str):
     
     return h5_file
 
+def read_STXM08U_h5(filepath:str,main_key:str="FPGA control board"):
+    h5_file=h5py.File(filepath,'r')
+    print(h5_file.filename)
+    
+    h5_data=h5_file.get(main_key)
+    matrix_counts = np.array(h5_data['PMT counter'],dtype=np.float32)
+    row_n,col_n=matrix_counts.shape
+    print(f'Matrix with shape:{matrix_counts.shape}')
+    matrix_ref=np.array(h5_data['PMT ref']).astype(np.float32)
+    pos_x=np.array(h5_data['positon 1 data'],dtype=np.float32)
+    pos_y=np.array(h5_data['positon 2 data'],dtype=np.float32)
+    return pos_x,pos_y,matrix_counts,matrix_ref
+
 def reshape_SSRFh5(filepath:str,main_key:str="FPGA control board"):
     h5_file=h5py.File(filepath,'r')
     print(h5_file.filename)
@@ -100,7 +113,7 @@ if __name__=="__main__":
     test_h5=os.path.abspath("h5_data\\SF20221202061732.h5")
     
     #topup_dotted_h5=os.path.abspath("h5_data\\SF20221205224716.h5")
-    topup_dotted_h5=os.path.abspath("h5_data\\SF20250508205131.h5")
+    topup_dotted_h5=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191145.h5")
     
     print(os.path.splitext(test_h5))
     #test_h5=os.path.abspath("h5_data\\SF20230115235856.h5")
@@ -111,7 +124,8 @@ if __name__=="__main__":
     # original data in sepearted and disordered position
     Image_count=np.array(h5_data['PMT counter'][:])
     Image_ref=np.array(h5_data['PMT ref'][:])
-    Image_corrected=Image_count+Image_ref.mean()-Image_ref
+    #Image_corrected=Image_count+Image_ref.mean()-Image_ref
+    Image_corrected=Image_count+Image_ref.mean()*0.0-Image_ref*0.2
     #print(f'original:\n{Image_count}')
     row_n,col_n=Image_count.shape
     
@@ -135,7 +149,7 @@ if __name__=="__main__":
     plt.colorbar(location='right', fraction=0.1),plt.title("PMT ref")
     #plt.subplot(2,2,2),plt.scatter(x=matrix_pos1,y=matrix_pos2,c=Image_ref,s=10,cmap=cm.rainbow),plt.title("PMT ref")
     #plt.colorbar(location='right', fraction=0.1)
-    plt.subplot(2,2,3),plt.imshow(order_PMTcount,cmap=cm.rainbow),plt.title("order PMT cpunts")
+    plt.subplot(2,2,3),plt.imshow(order_PMTcount,cmap=cm.rainbow),plt.title("order PMT counts")
     #plt.subplot(2,2,3),plt.imshow(correct_x[1::2],cmap=cm.rainbow),plt.title("Pos X_odd")
     plt.colorbar(location='right', fraction=0.1)
     plt.subplot(2,2,4),plt.imshow(order_PMTref,cmap=cm.rainbow),plt.title("order PMT ref")
@@ -149,11 +163,12 @@ if __name__=="__main__":
     # plt.subplot(2,2,2),plt.plot(x_list,matrix_pos1[2])
     # plt.subplot(2,2,3),plt.plot(x_list,matrix_pos13[4])
     # plt.subplot(2,2,4),plt.plot(x_list,matrix_pos1[6])
-    fig3 = plt.figure(figsize =(16, 9))
+    fig3 = plt.figure(figsize =(12, 12))
     fig3.canvas.manager.window.setWindowTitle("Visualize raw image")
-    #plt.subplot(1,1,1),plt.scatter(x=matrix_pos1,y=matrix_pos2,c=Image_count,s=10,cmap=cm.rainbow)
-    plt.subplot(1,1,1),plt.imshow(order_PMTcount,cmap=cm.plasma),plt.title("PMT counts")
-    plt.colorbar(location='right', fraction=0.1),plt.title("all counts")
+    plt.subplot(1,1,1),plt.scatter(x=matrix_pos1,y=matrix_pos2,c=Image_corrected,s=8,cmap=cm.turbo)
+    #plt.subplot(1,1,1),plt.imshow(Image_corrected,cmap=cm.terrain),plt.title("IMG corrected")
+    plt.colorbar(location='right', fraction=0.1)
+    #plt.title("all counts")
     plt.show()
 
     print("OK")
