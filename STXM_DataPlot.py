@@ -79,24 +79,25 @@ def read_STXM08U_h5(filepath:str,main_key:str="FPGA control board"):
     return pos_x-pos_x.min(),pos_y-pos_y.min(),matrix_counts,matrix_ref
 
 if __name__=="__main__":
-    preE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508175217.h5")
-    mainE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508175618.h5")
+    data_folder=r'J:\Projects_interested\Imaging_EVs_Cell\review\Figures\STXM_RAW'
+    preE_h5file=os.path.join(data_folder,"SF20250508174335.h5")
+    mainE_h5file=os.path.join(data_folder,"SF20250508174504.h5")
     #preE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191020.h5")
     #mainE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191145.h5")
-    title="STXM08U_10um"
+    title="STXM08U_100um"
     Engery_str=["525eV","540eV"]
     preE_data=read_STXM08U_h5(preE_h5file)
     mainE_data=read_STXM08U_h5(mainE_h5file)
     fig,axes=plt.subplots(1,2,figsize=(18,6))
     # pre edge plot
-    vlim=(821,927)
-    im1=axes[0].scatter(x=preE_data[0],y=preE_data[1],c=preE_data[2],s=8,cmap=cm.Spectral)
+    vlim=(860,960)
+    im1=axes[0].scatter(x=preE_data[0],y=preE_data[1],c=preE_data[2],s=8,cmap=cm.Spectral,clim=vlim)
     axes[0].set_xlabel("X(um)",fontsize=16)
     axes[0].set_ylabel("Y(um)",fontsize=16)
     axes[0].text(0.85, 0.1, Engery_str[0], horizontalalignment='center',
      verticalalignment='center', transform=axes[0].transAxes, fontsize=18,color='black')
     # main edge plot
-    im2=axes[1].scatter(x=mainE_data[0],y=mainE_data[1],c=mainE_data[2],s=8,cmap=cm.Spectral)
+    im2=axes[1].scatter(x=mainE_data[0],y=mainE_data[1],c=mainE_data[2],s=8,cmap=cm.Spectral,clim=vlim)
     axes[1].set_xlabel("X(um)",fontsize=16)
     axes[1].set_ylabel("Y(um)",fontsize=16)
     axes[1].text(0.85, 0.1, Engery_str[1], horizontalalignment='center',
