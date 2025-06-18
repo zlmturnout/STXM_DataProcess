@@ -80,17 +80,17 @@ def read_STXM08U_h5(filepath:str,main_key:str="FPGA control board"):
 
 if __name__=="__main__":
     data_folder=r'J:\Projects_interested\Imaging_EVs_Cell\review\Figures\STXM_RAW'
-    preE_h5file=os.path.join(data_folder,"SF20250508174335.h5")
-    mainE_h5file=os.path.join(data_folder,"SF20250508174504.h5")
-    #preE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191020.h5")
-    #mainE_h5file=os.path.abspath("h5_data\\STXM_RAW\\SF20250508191145.h5")
-    title="STXM08U_100um"
-    Engery_str=["525eV","540eV"]
+    # preE_h5file=os.path.join(data_folder,"SF20250508174335.h5")
+    # mainE_h5file=os.path.join(data_folder,"SF20250508174504.h5")
+    preE_h5file=os.path.join(data_folder,"SF20250508182622.h5")
+    mainE_h5file=os.path.join(data_folder,"SF20250508182442.h5")
+    title="STXM08U_mag"
+    Engery_str=["","Magnified"]
     preE_data=read_STXM08U_h5(preE_h5file)
     mainE_data=read_STXM08U_h5(mainE_h5file)
-    fig,axes=plt.subplots(1,2,figsize=(18,6))
+    fig,axes=plt.subplots(1,2,figsize=(18,7))
     # pre edge plot
-    vlim=(860,960)
+    vlim=(650,900)
     im1=axes[0].scatter(x=preE_data[0],y=preE_data[1],c=preE_data[2],s=8,cmap=cm.Spectral,clim=vlim)
     axes[0].set_xlabel("X(um)",fontsize=16)
     axes[0].set_ylabel("Y(um)",fontsize=16)
@@ -100,8 +100,8 @@ if __name__=="__main__":
     im2=axes[1].scatter(x=mainE_data[0],y=mainE_data[1],c=mainE_data[2],s=8,cmap=cm.Spectral,clim=vlim)
     axes[1].set_xlabel("X(um)",fontsize=16)
     axes[1].set_ylabel("Y(um)",fontsize=16)
-    axes[1].text(0.85, 0.1, Engery_str[1], horizontalalignment='center',
-     verticalalignment='center', transform=axes[1].transAxes, fontsize=18,color='black')
+    axes[1].text(0.82, 0.1, Engery_str[1], horizontalalignment='center',
+     verticalalignment='center', transform=axes[1].transAxes, fontsize=18,color='white')
     # add colorbar
     cbar=fig.colorbar(im1,ax=axes,orientation='vertical', fraction=0.1)
     # save figure
