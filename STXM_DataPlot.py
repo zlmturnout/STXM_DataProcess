@@ -87,7 +87,7 @@ if __name__=="__main__":
     #preE_h5file=os.path.join(data_folder,"SF20250508191020.h5")
     #mainE_h5file=os.path.join(data_folder,"SF20250508191145.h5")
     # new folder cell
-    data_folder=r'G:\Projects_interested\cyro_STXM\Cell_pics'
+    data_folder=r'J:\Projects_interested\cyro_STXM\Cell_pics'
     preE_h5file=os.path.join(data_folder,"60.h5")
     mainE_h5file=os.path.join(data_folder,"80.h5")
 
